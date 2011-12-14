@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+    <title>Object on iPhone Example - jQuery Reel 360°</title>
+    <meta content='width=device-width,initial-scale=1,maximum-scale=1' name='viewport'>
+    <script src='http://code.jquery.com/jquery-latest.min.js' type='text/javascript'></script>
+    <script src='../jquery.reel.js' type='text/javascript'></script>
+    <script src='inc/jquery.disabletextselect-min.js' type='text/javascript'></script>
+    <meta name='viewport' content='width = 276' />
+    <style>
+      html, body{ margin: 0; background: #fff; color:#000; }
+      #image-reel{width:100%!important;}
+      #image-reel img{max-width:100%; height:auto;}
+    </style>
+  </head>
+  <body>
+    <form id="sku_selector" action="">
+        <label>SKU with 3d view
+            <input type="text" id="sku_id" name="sku" value="1853531" />
+        </label>
+        <input type="submit">
+        SKUs: <a href="?sku=2738738">2738738</a> <a href="?sku=3440705">3440705</a> <a href="?sku=1853531">1853531</a>
+    </form>
+    <div id="example">
+      
+    </div>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            threeDeeView();
+            
+            if (getParameterByName('sku')){
+                $('#sku_id').val(getParameterByName('sku'));
+            }
+            //var images = ["http://images.bestbuy.com/360images/3440705/1.jpg", "http://images.bestbuy.com/360images/3440705/2.jpg", "http://images.bestbuy.com/360images/3440705/3.jpg", "http://images.bestbuy.com/360images/3440705/4.jpg", "http://images.bestbuy.com/360images/3440705/5.jpg", "http://images.bestbuy.com/360images/3440705/6.jpg", "http://images.bestbuy.com/360images/3440705/7.jpg", "http://images.bestbuy.com/360images/3440705/8.jpg", "http://images.bestbuy.com/360images/3440705/9.jpg", "http://images.bestbuy.com/360images/3440705/10.jpg", "http://images.bestbuy.com/360images/3440705/11.jpg", "http://images.bestbuy.com/360images/3440705/12.jpg", "http://images.bestbuy.com/360images/3440705/13.jpg", "http://images.bestbuy.com/360images/3440705/14.jpg", "http://images.bestbuy.com/360images/3440705/15.jpg", "http://images.bestbuy.com/360images/3440705/16.jpg", "http://images.bestbuy.com/360images/3440705/17.jpg", "http://images.bestbuy.com/360images/3440705/18.jpg", "http://images.bestbuy.com/360images/3440705/19.jpg", "http://images.bestbuy.com/360images/3440705/20.jpg"]
+            //$('#image').reel({ images: images, frames: 20});
+            
+        });
+        
+        function threeDeeView(){
+            $('#example').empty();
+            var images = [],
+                i = 0,
+                sku = getParameterByName('sku') || $('#sku_id').val(),
+                url = 'http://images.bestbuy.com/360images/'+sku+'/';
+                
+            $('#example').append("<img id='image' src='"+url+"1.jpg' width='425' height='315' />");
+            while (i < 20){
+                images.push(url + (i+1) + '.jpg');
+                i++;
+            }
+            console.log(images);
+            $('#image').reel({ images: images, frames: 20});
+            
+        }
+        
+        function getParameterByName(name)
+        {
+          name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+          var regexS = "[\\?&]" + name + "=([^&#]*)";
+          var regex = new RegExp(regexS);
+          var results = regex.exec(window.location.href);
+          if(results == null)
+            return "";
+          else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        </script>
+  </body>
+</html>

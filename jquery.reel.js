@@ -265,7 +265,15 @@ jQuery.reel || (function($, window, document, undefined){
                 });
                 area
                   .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
-                  .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
+                  .bind(_touchmove_, function(e){ 
+                    t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]);
+                    delta= { x: finger(e).clientX - last.x, y: finger(e).clientY - last.y }
+                    if (abs(delta.x) > 0){
+                      return !scrollable
+                    }else{
+                      return scrollable
+                    }
+                   })
                   .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                   .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
               }else{
